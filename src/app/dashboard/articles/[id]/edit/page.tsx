@@ -1,0 +1,26 @@
+import EditArticlePage from "@/src/components/articles/edit-article-page";
+import { prisma } from "@/src/lib/prisma";
+
+import React from "react";
+type Props = {
+  params: Promise<{ id: string }>;
+};
+const page = async ({ params }: Props) => {
+  const id = (await params).id;
+  const article = await prisma.articles.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!article) {
+    return <h1>Article not found.</h1>;
+  }
+
+  return (
+    <div>
+      <EditArticlePage article={article} />
+    </div>
+  );
+};
+
+export default page;
