@@ -9,10 +9,33 @@ import {
 import RecentArticles from "./recent-articles";
 import { prisma } from "@/src/lib/prisma";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const BlogDashboard = async () => {
+  // Get the current user
+  const user = await currentUser();
+  if (!user) {
+    redirect("/");
+  }
+
+  // Get the user from database
+  const dbUser = await prisma.user.findUnique({
+    where: {
+      clerkUserId: user.id,
+    },
+  });
+
+  if (!dbUser) {
+    redirect("/");
+  }
+
+  // Fetch only articles belonging to the current user
   const [articles, totalComments] = await Promise.all([
     prisma.articles.findMany({
+      where: {
+        authorId: dbUser.id, // Filter by current user's ID
+      },
       orderBy: {
         createdAt: "desc",
       },
@@ -27,8 +50,16 @@ const BlogDashboard = async () => {
         },
       },
     }),
-    prisma.comment.count(),
+    // Also filter comments to only count comments on user's articles
+    prisma.comment.count({
+      where: {
+        article: {
+          authorId: dbUser.id,
+        },
+      },
+    }),
   ]);
+
   return (
     <main className="flex-1 p-4 pl-3 md:p-8 md:pt-4">
       <div className="flex justify-between items-center mb-8">
