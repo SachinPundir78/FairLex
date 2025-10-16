@@ -68,7 +68,7 @@ FairLex/
 | ![Screenshot 3](./public/S3.png) | ![Screenshot 4](./public/S4.png) |
 | ![Screenshot 5](./public/S5.png) | ![Screenshot 6](./public/S6.png) |
 | ![Screenshot 7](./public/S7.png) | ![Screenshot 8](./public/S8.png) |
-| ![Screenshot 9](./public/S9.png) | ![Screenshot 10](./public/10.png) |
+| ![Screenshot 9](./public/S9.png) | ![Screenshot 10](./public/S10.png) |
 
 > 📷 _All UI screenshots of FairLex are stored inside the `/screenshots` folder._
 
