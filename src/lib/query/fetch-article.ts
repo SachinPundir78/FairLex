@@ -18,6 +18,9 @@ export const fetchArticleByQuery = async (
           select: { name: true, imageUrl: true, email: true },
         },
       },
+      orderBy: {
+        createdAt: "desc", // ✅ newest articles first
+      },
       skip: skip,
       take: take,
     }),

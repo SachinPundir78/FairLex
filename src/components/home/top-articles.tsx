@@ -12,6 +12,7 @@ import {
 
 const TopArticles = async () => {
   const articles = await prisma.articles.findMany({
+    take: 3,
     orderBy: {
       createdAt: "desc",
     },
@@ -29,7 +30,7 @@ const TopArticles = async () => {
 
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {articles.slice(0, 3).map((article) => (
+      {articles.map((article) => (
         <Card
           key={article.id}
           className={cn(
@@ -52,8 +53,7 @@ const TopArticles = async () => {
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={article.author.imageUrl as string} />
                   <AvatarFallback>
-                    {" "}
-                    {article.author.name.charAt(0)}{" "}
+                    {article.author.name.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
                 <span>{article.author.name}</span>
@@ -66,7 +66,7 @@ const TopArticles = async () => {
               </p>
               <div className="mt-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                 <span>{new Date(article.createdAt).toDateString()}</span>
-                <span>{12} min to read</span>
+                <span>12 min to read</span>
               </div>
             </Link>
           </div>
