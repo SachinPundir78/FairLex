@@ -228,8 +228,8 @@ const BlogFooter = () => {
       {/* Founder Credit */}
       <div className="bg-gray-100 dark:bg-gray-950 py-4 text-center">
         <p className="text-xs text-gray-500 dark:text-gray-500">
-          Founded by{" "}
-          <span className="font-semibold text-red-600">Aziz Umar</span> •
+          Inspired by{" "}
+          <span className="font-semibold text-red-600">Monkey D. Luffy</span> •
           Designed & Developed by{" "}
           <span className="font-semibold text-orange-500">Sachin Pundir</span>
         </p>
