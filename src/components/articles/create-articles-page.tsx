@@ -1,4 +1,5 @@
 "use client";
+
 import React, {
   FormEvent,
   startTransition,
@@ -12,6 +13,8 @@ import { Button } from "../ui/button";
 import "react-quill-new/dist/quill.snow.css";
 import { createArticle } from "@/src/actions/create-article";
 import dynamic from "next/dynamic";
+import { categories } from "@/src/config/categories"; // ✅ import your categories array
+
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 const CreateArticlesPage = () => {
@@ -26,7 +29,7 @@ const CreateArticlesPage = () => {
     const formData = new FormData(event.currentTarget);
     formData.append("content", content);
 
-    // Wrap the action call in startTransition
+    // ✅ Wrap the action call in startTransition
     startTransition(() => {
       action(formData);
     });
@@ -40,12 +43,13 @@ const CreateArticlesPage = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-5">
+            {/* ✅ Title Field */}
             <div className="space-y-3 mt-1">
               <Label htmlFor="title">Article Title</Label>
               <Input
                 type="text"
                 name="title"
-                placeholder="Enter a Article Title"
+                placeholder="Enter an Article Title"
               />
               {formState.errors.title && (
                 <span className="font-medium text-sm text-red-500">
@@ -53,19 +57,23 @@ const CreateArticlesPage = () => {
                 </span>
               )}
             </div>
+
+            {/* ✅ Category Dropdown */}
             <div className="space-y-3">
               <Label htmlFor="category">Category</Label>
               <select
                 id="category"
                 name="category"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 
+                  file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground 
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <option value="">Select Category</option>
-                <option value="Constitutional">Constitutional</option>
-                <option value="Technology">Technology</option>
-                <option value="Corporate">Corporate</option>
-                <option value="Family">Family</option>
-                <option value="ADR">ADR</option>
+                {categories.map((cat) => (
+                  <option key={cat.slug} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
               </select>
               {formState.errors.category && (
                 <span className="font-medium text-sm text-red-500">
@@ -74,6 +82,40 @@ const CreateArticlesPage = () => {
               )}
             </div>
 
+            {/* ✅ Category Selection Dropdown Harcoded one that i replaced with categories.ts */}
+            {/* <div className="space-y-3">
+             
+              <Label htmlFor="category">Category</Label>
+
+             
+              <select
+                id="category"
+                name="category"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm 
+      ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium 
+      placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 
+      focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+               
+                <option value="">Select Category</option>
+
+                
+                <option value="Constitutional">Constitutional</option>
+                <option value="Technology">Technology</option>
+                <option value="Corporate">Corporate</option>
+                <option value="Family">Family</option>
+                <option value="ADR">ADR</option>
+              </select>
+
+             
+              {formState.errors.category && (
+                <span className="font-medium text-sm text-red-500">
+                  {formState.errors.category}
+                </span>
+              )}
+            </div> */}
+
+            {/* ✅ Featured Image Upload */}
             <div className="space-y-3">
               <Label htmlFor="featuredImage">Featured Image</Label>
               <Input
@@ -89,6 +131,7 @@ const CreateArticlesPage = () => {
               )}
             </div>
 
+            {/* ✅ Rich Text Editor */}
             <div className="space-y-3">
               <Label>Content</Label>
               <ReactQuill theme="snow" value={content} onChange={setContent} />
@@ -99,6 +142,7 @@ const CreateArticlesPage = () => {
               )}
             </div>
 
+            {/* ✅ Submit Buttons */}
             <div className="flex justify-end gap-4">
               <Button type="button" variant="outline">
                 Cancel
