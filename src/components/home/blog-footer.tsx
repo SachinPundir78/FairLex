@@ -226,14 +226,14 @@ const BlogFooter = () => {
       </div>
 
       {/* Founder Credit */}
-      {/* <div className="bg-gray-100 dark:bg-gray-950 py-4 text-center">
+      <div className="bg-gray-100 dark:bg-gray-950 py-4 text-center">
         <p className="text-xs text-gray-500 dark:text-gray-500">
           Inspired by{" "}
           <span className="font-semibold text-red-600">Monkey D. Luffy</span> •
           Designed & Developed by{" "}
           <span className="font-semibold text-orange-500">Sachin Pundir</span>
         </p>
-      </div> */}
+      </div>
     </footer>
   );
 };

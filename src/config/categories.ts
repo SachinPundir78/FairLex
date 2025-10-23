@@ -25,6 +25,14 @@ export interface Category {
 
 export const categories: Category[] = [
   {
+    name: "Education",
+    slug: "education",
+    icon: GraduationCap,
+    color: "text-blue-600 dark:text-blue-400",
+    gradient: "from-blue-500 to-cyan-500",
+    description: "Legal education and academic insights",
+  },
+  {
     name: "Family",
     slug: "family",
     icon: Users,
@@ -41,12 +49,20 @@ export const categories: Category[] = [
     description: "Constitutional law and fundamental rights",
   },
   {
-    name: "Education",
-    slug: "education",
-    icon: GraduationCap,
-    color: "text-blue-600 dark:text-blue-400",
-    gradient: "from-blue-500 to-cyan-500",
-    description: "Legal education and academic insights",
+    name: "Politics",
+    slug: "politics",
+    icon: Landmark,
+    color: "text-orange-600 dark:text-orange-400",
+    gradient: "from-orange-500 to-red-500",
+    description: "Political developments and policy analysis",
+  },
+  {
+    name: "Technology",
+    slug: "technology",
+    icon: Laptop,
+    color: "text-emerald-600 dark:text-emerald-400",
+    gradient: "from-emerald-500 to-teal-500",
+    description: "Technology law and digital rights",
   },
   {
     name: "ADR",
@@ -63,22 +79,6 @@ export const categories: Category[] = [
     color: "text-blue-600 dark:text-blue-400",
     gradient: "from-blue-600 to-indigo-500",
     description: "Corporate law and business regulations",
-  },
-  {
-    name: "Technology",
-    slug: "technology",
-    icon: Laptop,
-    color: "text-emerald-600 dark:text-emerald-400",
-    gradient: "from-emerald-500 to-teal-500",
-    description: "Technology law and digital rights",
-  },
-  {
-    name: "Politics",
-    slug: "politics",
-    icon: Landmark,
-    color: "text-orange-600 dark:text-orange-400",
-    gradient: "from-orange-500 to-red-500",
-    description: "Political developments and policy analysis",
   },
   {
     name: "International",
