@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -12,14 +12,6 @@ import { SignedIn, UserButton } from "@clerk/nextjs";
 import { searchAction } from "@/src/actions/search";
 import { categories } from "@/src/config/categories";
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * Navbar component
- *
- * @description A navigation bar component containing links to different sections of the website
- * @returns {JSX.Element} A JSX element representing the navigation bar
- */
-/*******  9bd30363-3c4e-4f90-83ab-6857b82030ef  *******/
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
@@ -149,7 +141,11 @@ const Navbar = () => {
             {/* Right Section */}
             <div className="flex items-center gap-4">
               <div className="hidden sm:block">
-                <SearchInput />
+                <Suspense
+                  fallback={<div className="w-48 h-10 bg-muted rounded-md" />}
+                >
+                  <SearchInput />
+                </Suspense>
               </div>
               <ToggleMode />
 

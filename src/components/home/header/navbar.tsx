@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -141,7 +141,11 @@ const Navbar = () => {
             {/* Right Section */}
             <div className="flex items-center gap-4">
               <div className="hidden sm:block">
-                <SearchInput />
+                <Suspense
+                  fallback={<div className="w-48 h-10 bg-muted rounded-md" />}
+                >
+                  <SearchInput />
+                </Suspense>
               </div>
               <ToggleMode />
 
