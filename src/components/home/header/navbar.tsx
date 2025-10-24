@@ -20,7 +20,7 @@ const Navbar = () => {
   const isAdmin = user?.publicMetadata?.role === "admin"; // ✅ check if user is admin
 
   return (
-    <nav className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="fixed top-0 z-50 py-1 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-0 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Left Section */}
@@ -28,7 +28,7 @@ const Navbar = () => {
             {/* Logo */}
             <div className="relative h-10 w-10 md:h-12 md:w-12">
               <Image
-                src="/courthouse.png"
+                src="/balance.png"
                 alt="FairLex Logo"
                 fill
                 className="object-contain"

@@ -43,15 +43,15 @@ const ContactPage = () => {
     try {
       // Replace these with your actual EmailJS credentials
       const result = await emailjs.send(
-        "service_qhob8hu", // Replace with your EmailJS service ID
-        "template_7qb8erj", // Replace with your EmailJS template ID
+        "service_idrjioi", // Replace with your EmailJS service ID
+        "template_szyy4k7", // Replace with your EmailJS template ID
         {
           from_name: formData.name,
           from_email: formData.email,
           subject: formData.subject,
           message: formData.message,
         },
-        "AP0I0bnOE8VZhQE-A" // Replace with your EmailJS public key
+        "jP-usqQvSSq9Q24J5" // Replace with your EmailJS public key
       );
 
       if (result.status === 200) {
@@ -95,8 +95,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-muted-foreground">contact@fairlex.com</p>
-                    <p className="text-muted-foreground">support@fairlex.com</p>
+                    <p className="text-muted-foreground">fairlex001@gmail.com</p>
+                    <p className="text-muted-foreground">fairlex001@gmail.com</p>
                   </div>
                 </div>
 
@@ -106,7 +106,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Phone</h3>
-                    <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                    <p className="text-muted-foreground">+91 (555) 123-4567</p>
                     <p className="text-sm text-muted-foreground">
                       Mon-Fri 9am-6pm EST
                     </p>
@@ -124,7 +124,7 @@ const ContactPage = () => {
                       <br />
                       Justice District
                       <br />
-                      New York, NY 10001
+                      New Delhi, India
                     </p>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ const ContactPage = () => {
                   → Explore Categories
                 </Link>
                 <Link
-                  href="/dashboard"
+                  href="/"
                   className="block text-muted-foreground hover:text-amber-500 transition-colors"
                 >
                   → Access Dashboard

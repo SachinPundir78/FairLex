@@ -25,7 +25,7 @@ export async function ArticlesContent({
       <AllArticlesPage articles={articles} />
 
       {/* ✅ Pagination */}
-      <div className="mt-12 flex justify-center gap-2">
+      <div className="mt-8 flex justify-center gap-2">
         {/* Prev */}
         <Link href={`?search=${searchText}&page=${currentPage - 1}`} passHref>
           <Button variant="ghost" size="sm" disabled={currentPage === 1}>

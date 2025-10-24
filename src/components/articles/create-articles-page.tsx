@@ -37,7 +37,7 @@ const CreateArticlesPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <Card className="gap-3">
+      <Card className="gap-3 py-4">
         <CardHeader>
           <CardTitle>Create New Article</CardTitle>
         </CardHeader>

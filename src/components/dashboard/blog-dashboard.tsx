@@ -77,7 +77,7 @@ const BlogDashboard = async () => {
 
       {/* Quick Stats */}
       <div className="grid gap-4 md:grid-cols-3 mb-8">
-        <Card>
+        <Card className="py-4">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Total Articles
@@ -92,7 +92,7 @@ const BlogDashboard = async () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="py-4">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Total Comments
@@ -107,7 +107,7 @@ const BlogDashboard = async () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="py-4">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Avg. Reading Time

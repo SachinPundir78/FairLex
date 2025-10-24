@@ -10,7 +10,7 @@ import {
   Award,
 } from "lucide-react";
 import {
-  FaTwitter,
+  FaYoutube,
   FaLinkedinIn,
   FaInstagram,
   FaFacebookF,
@@ -18,6 +18,14 @@ import {
 
 const BlogFooter = () => {
   const currentYear = new Date().getFullYear();
+
+  // Social links
+  const socialLinks = [
+    { icon: FaYoutube, href: "https://www.youtube.com/@fairlex-l1w" },
+    { icon: FaLinkedinIn, href: "https://www.linkedin.com/company/fairlex001/" },
+    { icon: FaInstagram, href: "https://www.instagram.com" },
+    { icon: FaFacebookF, href: "https://www.facebook.com" },
+  ];
 
   return (
     <footer className="relative bg-cream dark:bg-gray-900/10 text-gray-800 dark:text-gray-200 transition-colors duration-300">
@@ -41,30 +49,17 @@ const BlogFooter = () => {
               knowledge through scholarly excellence and accessible commentary.
             </p>
             <div className="flex space-x-4">
-              <a
-                href="#"
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gradient-to-r hover:from-orange-500 hover:via-red-600 hover:to-yellow-500 hover:text-white transition-all duration-300 transform hover:scale-110"
-              >
-                <FaTwitter className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gradient-to-r hover:from-orange-500 hover:via-red-600 hover:to-yellow-500 hover:text-white transition-all duration-300 transform hover:scale-110"
-              >
-                <FaLinkedinIn className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gradient-to-r hover:from-orange-500 hover:via-red-600 hover:to-yellow-500 hover:text-white transition-all duration-300 transform hover:scale-110"
-              >
-                <FaInstagram className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gradient-to-r hover:from-orange-500 hover:via-red-600 hover:to-yellow-500 hover:text-white transition-all duration-300 transform hover:scale-110"
-              >
-                <FaFacebookF className="w-5 h-5" />
-              </a>
+              {socialLinks.map(({ icon: Icon, href }, idx) => (
+                <a
+                  key={idx}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gradient-to-r hover:from-orange-500 hover:via-red-600 hover:to-yellow-500 hover:text-white transition-all duration-300 transform hover:scale-110"
+                >
+                  <Icon className="w-5 h-5" />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -132,11 +127,11 @@ const BlogFooter = () => {
             </h4>
             <div className="space-y-4">
               <a
-                href="mailto:contact@fairlex.com"
+                href="mailto:fairlex001@gmail.com"
                 className="flex items-start space-x-3 text-sm text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 transition-colors duration-200 group"
               >
                 <Mail className="w-5 h-5 mt-0.5 group-hover:scale-110 transition-transform" />
-                <span>contact@fairlex.com</span>
+                <span>fairlex001@gmail.com</span>
               </a>
               <div className="flex items-start space-x-3 text-sm text-gray-600 dark:text-gray-400">
                 <Phone className="w-5 h-5 mt-0.5" />
@@ -224,16 +219,6 @@ const BlogFooter = () => {
           </div>
         </div>
       </div>
-
-      {/* Founder Credit */}
-      {/* <div className="bg-gray-100 dark:bg-gray-950 py-4 text-center">
-        <p className="text-xs text-gray-500 dark:text-gray-500">
-          Inspired by{" "}
-          <span className="font-semibold text-red-600">Monkey D. Luffy</span> •
-          Designed & Developed by{" "}
-          <span className="font-semibold text-orange-500">Sachin Pundir</span>
-        </p>
-      </div> */}
     </footer>
   );
 };
