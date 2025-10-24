@@ -8,13 +8,16 @@ import ToggleMode from "./toggle-mode";
 import Image from "next/image";
 import { Search, Menu, X, ChevronDown } from "lucide-react";
 import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs"; // ✅ added useUser
 import { searchAction } from "@/src/actions/search";
 import { categories } from "@/src/config/categories";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+
+  const { user } = useUser(); // ✅ get signed-in user
+  const isAdmin = user?.publicMetadata?.role === "admin"; // ✅ check if user is admin
 
   return (
     <nav className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -34,13 +37,13 @@ const Navbar = () => {
             </div>
 
             <Link href="/" className="flex flex-col -space-y-1">
-              <span className="font-bold text-3xl leading-none">
+              <span className="font-bold text-3xl leading-none mt-1">
                 <span className="bg-gradient-to-r from-amber-500 via-orange-400 to-amber-400 bg-clip-text text-transparent">
                   Fair
                 </span>
                 <span className="text-foreground">Lex</span>
               </span>
-              <span className="text-[10px] text-muted-foreground/80 font-medium tracking-wider font-sans mt-1">
+              <span className="hidden md:block text-[10px] text-muted-foreground/80 font-medium tracking-wider font-sans mt-1">
                 Where Legal Thought Becomes Legal Insight
               </span>
             </Link>
@@ -122,12 +125,16 @@ const Navbar = () => {
               )}
             </div>
 
-            <Link
-              href={"/dashboard"}
-              className="text-md font-semibold text-foreground transition-colors hover:text-foreground"
-            >
-              Dashboard
-            </Link>
+            {/* ✅ Admin-only Dashboard link */}
+            {isAdmin && (
+              <Link
+                href={"/dashboard"}
+                className="text-md font-semibold text-foreground transition-colors hover:text-foreground"
+              >
+                Dashboard
+              </Link>
+            )}
+
             <Link
               href={"/contact"}
               className="text-md font-semibold text-foreground transition-colors hover:text-foreground"
@@ -138,7 +145,6 @@ const Navbar = () => {
 
           {/* Right Section - Search & Actions */}
           <div className="flex items-center gap-2">
-            {/* Right Section */}
             <div className="flex items-center gap-4">
               <div className="hidden sm:block">
                 <Suspense
@@ -249,13 +255,16 @@ const Navbar = () => {
                 )}
               </div>
 
-              <Link
-                href="/dashboard"
-                className="block px-3 py-2 text-base font-medium text-foreground"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
+              {/* ✅ Admin-only Dashboard link (Mobile) */}
+              {isAdmin && (
+                <Link
+                  href="/dashboard"
+                  className="block px-3 py-2 text-base font-medium text-foreground"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+              )}
 
               <Link
                 href="/contact"
