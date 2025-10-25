@@ -112,7 +112,7 @@ const LatestStoriesSection = ({
   };
 
   return (
-    <section className="w-full py-12 lg:py-16 relative overflow-hidden">
+    <section className="w-full  relative overflow-hidden">
       {/* Light Mode Glow */}
       <div className="absolute inset-0 z-0">
         <div

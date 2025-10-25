@@ -31,7 +31,7 @@ export function AllArticlesPage({ articles }: SearchPageProps) {
           >
             <Link href={`/articles/${article.id}`}>
               {/* Featured Image */}
-              <div className="relative h-64 w-full overflow-hidden">
+              <div className="relative h-56 w-full overflow-hidden">
                 <Image
                   src={article.featuredImage as string}
                   alt={article.title}
@@ -66,12 +66,12 @@ export function AllArticlesPage({ articles }: SearchPageProps) {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white leading-tight mb-3">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white leading-tight mb-3 truncate">
                   {article.title}
                 </h3>
 
                 {/* Description/Excerpt */}
-                <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-400 line-clamp-3 text-sm">
                   {(() => {
                     // Strip HTML tags and limit excerpt
                     const plainContent = article.content.replace(

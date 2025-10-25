@@ -8,7 +8,7 @@ import ToggleMode from "./toggle-mode";
 import Image from "next/image";
 import { Search, Menu, X, ChevronDown } from "lucide-react";
 import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
-import { SignedIn, UserButton, useUser } from "@clerk/nextjs"; // ✅ added useUser
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { searchAction } from "@/src/actions/search";
 import { categories } from "@/src/config/categories";
 
@@ -16,12 +16,12 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
 
-  const { user } = useUser(); // ✅ get signed-in user
-  const isAdmin = user?.publicMetadata?.role === "admin"; // ✅ check if user is admin
+  const { user } = useUser();
+  const isAdmin = user?.publicMetadata?.role === "admin";
 
   return (
     <nav className="fixed top-0 z-50 py-1 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 sm:px-0 lg:px-8">
+      <div className="container mx-auto px-4 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Left Section */}
           <div className="flex items-center gap-2">
@@ -62,6 +62,12 @@ const Navbar = () => {
               className="text-md font-semibold text-foreground transition-colors hover:text-foreground"
             >
               Blog
+            </Link>
+            <Link
+              href={"/fair-review"}
+              className="text-md font-semibold text-foreground transition-colors hover:text-foreground"
+            >
+              Fair Review
             </Link>
 
             {/* Categories Dropdown */}
@@ -116,7 +122,7 @@ const Navbar = () => {
                     {/* View All Link */}
                     <Link
                       href="/categories"
-                      className="flex items-center justify-center px-3 py-2.5 rounded-md hover:bg-accent transition-colors text-sm font-medium text-primary mt-1 border-t"
+                      className="flex items-center justify-center px-3 py-2.5 rounded-md hover:bg-accent transition-colors text-sm font-medium text-primary mt-1 border"
                     >
                       View All Categories →
                     </Link>
@@ -125,7 +131,7 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* ✅ Admin-only Dashboard link */}
+            {/* Admin-only Dashboard link */}
             {isAdmin && (
               <Link
                 href={"/dashboard"}
@@ -187,9 +193,9 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Now Scrollable */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 space-y-4 border-t">
+          <div className="md:hidden max-h-[calc(100vh-5rem)] overflow-y-auto py-4 space-y-4 border-t">
             {/* Search Bar (Mobile) */}
             <div className="px-4">
               <form action={searchAction} className="relative">
@@ -213,11 +219,18 @@ const Navbar = () => {
                 About
               </Link>
               <Link
-                href="/blog"
+                href="/articles"
                 className="block px-3 py-2 text-base font-medium text-foreground"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Blog
+              </Link>
+              <Link
+                href="/fair-review"
+                className="block px-3 py-2 text-base font-medium text-foreground"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                FairReview
               </Link>
 
               {/* Mobile Categories - Expandable */}
@@ -255,7 +268,7 @@ const Navbar = () => {
                 )}
               </div>
 
-              {/* ✅ Admin-only Dashboard link (Mobile) */}
+              {/* Admin-only Dashboard link (Mobile) */}
               {isAdmin && (
                 <Link
                   href="/dashboard"
@@ -277,7 +290,7 @@ const Navbar = () => {
 
             {/* Mobile Auth Buttons */}
             <SignedOut>
-              <div className="px-4 flex flex-col gap-2">
+              <div className="px-4 flex flex-col gap-2 pb-4">
                 <SignInButton>
                   <Button variant="outline" className="w-full">
                     Login

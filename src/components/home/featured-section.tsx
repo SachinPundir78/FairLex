@@ -4,6 +4,7 @@ import { Badge } from "@/src/components/ui/badge";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { getCategoryByName } from "@/src/config/categories";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface BlogPost {
   id: string;
@@ -34,11 +35,18 @@ const FeaturedSection = ({ latestPost }: FeaturedSectionProps) => {
       ? descriptionWords.slice(0, 50).join(" ") + "..."
       : plainExcerpt;
 
+  // ✅ Ensure date rendering is stable (SSR-safe)
+  const [formattedDate, setFormattedDate] = useState<string>(latestPost.date);
+  useEffect(() => {
+    // Normalize date format for client and server consistency
+    const d = new Date(latestPost.date);
+    setFormattedDate(d.toISOString().split("T")[0]);
+  }, [latestPost.date]);
 
   return (
     <section className="w-full py-12 lg:py-14 relative overflow-hidden mt-10">
-      {/* Light Mode Glow */}
-      {/* <div className="absolute inset-0 z-0">
+      {/* ✅ Light Mode Glow (SSR-safe using client check) */}
+      <div className="absolute inset-0 z-0">
         <div
           className="absolute inset-0 dark:hidden"
           style={{
@@ -48,7 +56,7 @@ const FeaturedSection = ({ latestPost }: FeaturedSectionProps) => {
             `,
           }}
         />
-      </div> */}
+      </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -80,25 +88,27 @@ const FeaturedSection = ({ latestPost }: FeaturedSectionProps) => {
             <div className="relative grid lg:grid-cols-[1fr_2fr] gap-4">
               {/* Image Section */}
               {latestPost.image && (
-                <div className="relative h-56 lg:h-full min-h-[350px] overflow-hidden">
+                <div className="relative h-58 lg:h-full min-h-[350px] overflow-hidden">
                   <Image
                     src={latestPost.image}
                     alt={latestPost.title}
                     fill
+                    priority
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 " />
+                  <div className="absolute inset-0" />
                 </div>
               )}
 
               {/* Content Section */}
               <div
-                className={`p-6 lg:px-4 lg:py-0 flex flex-col justify-center ${
+                className={`p-8 lg:px-4 lg:py-3
+                   flex flex-col justify-center ${
                   !latestPost.image ? "lg:col-span-2" : ""
                 }`}
               >
                 {/* Badges */}
-                <div className="flex flex-wrap items-center gap-2 mb-2 mt-2">
+                <div className="flex flex-wrap items-center gap-2 mb-2 mt-3">
                   <Badge className="bg-gradient-to-r from-amber-500 to-orange-400 text-white border-0 px-4 py-1.5 text-sm font-semibold">
                     ✨ Featured
                   </Badge>
@@ -115,11 +125,11 @@ const FeaturedSection = ({ latestPost }: FeaturedSectionProps) => {
                 </div>
 
                 {/* Title */}
-                <h2 className="text-3xl lg:text-4xl font-bold mb-4 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-amber-500 group-hover:to-orange-400 group-hover:bg-clip-text transition-all duration-300">
+                <h2 className="text-3xl lg:text-4xl font-bold font-serif mb-4 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-amber-500 group-hover:to-orange-400 group-hover:bg-clip-text transition-all duration-300">
                   {latestPost.title}
                 </h2>
 
-                {/* 100-word Excerpt */}
+                {/* Excerpt */}
                 <p className="text-md text-muted-foreground mb-4 max-w-5xl leading-relaxed">
                   {truncatedExcerpt}
                 </p>
@@ -134,7 +144,7 @@ const FeaturedSection = ({ latestPost }: FeaturedSectionProps) => {
 
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-amber-500" />
-                    <span>{latestPost.date}</span>
+                    <span>{formattedDate}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -144,7 +154,7 @@ const FeaturedSection = ({ latestPost }: FeaturedSectionProps) => {
                 </div>
 
                 {/* CTA */}
-                <div className="inline-flex items-center gap-2 text-amber-500 font-semibold group-hover:gap-4 transition-all duration-300">
+                <div className="inline-flex items-center gap-2 text-amber-500 font-semibold group-hover:gap-4 transition-all duration-300 mb-2">
                   <span className="text-base">Read Full Article</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -158,6 +168,7 @@ const FeaturedSection = ({ latestPost }: FeaturedSectionProps) => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-400/5 rounded-full blur-3xl -z-10" />
       </div>
 
+      {/* Background Grid Pattern */}
       <style jsx>{`
         .bg-grid-pattern {
           background-image: linear-gradient(

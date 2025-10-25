@@ -11,6 +11,7 @@ import {
   BookOpen,
   Shield,
   FileText,
+  Star,
   type LucideIcon,
 } from "lucide-react";
 
@@ -40,14 +41,7 @@ export const categories: Category[] = [
     gradient: "from-purple-500 to-violet-500",
     description: "Constitutional law and fundamental rights",
   },
-  {
-    name: "Education",
-    slug: "education",
-    icon: GraduationCap,
-    color: "text-blue-600 dark:text-blue-400",
-    gradient: "from-blue-500 to-cyan-500",
-    description: "Legal education and academic insights",
-  },
+
   {
     name: "ADR",
     slug: "adr",
@@ -71,6 +65,30 @@ export const categories: Category[] = [
     color: "text-emerald-600 dark:text-emerald-400",
     gradient: "from-emerald-500 to-teal-500",
     description: "Technology law and digital rights",
+  },
+  {
+    name: "Landmark Cases",
+    slug: "landmark-cases",
+    icon: Gavel, // or choose another suitable icon
+    color: "text-fuchsia-600 dark:text-fuchsia-400",
+    gradient: "from-fuchsia-500 to-pink-500",
+    description: "Important landmark case judgments",
+  },
+  {
+    name: "Case Updates",
+    slug: "case-updates",
+    icon: FileText, // or choose another suitable icon
+    color: "text-teal-600 dark:text-teal-400",
+    gradient: "from-teal-500 to-cyan-500",
+    description: "Latest updates on ongoing cases",
+  },
+  {
+    name: "Education",
+    slug: "education",
+    icon: GraduationCap,
+    color: "text-blue-600 dark:text-blue-400",
+    gradient: "from-blue-500 to-cyan-500",
+    description: "Legal education and academic insights",
   },
   {
     name: "Politics",
@@ -119,6 +137,14 @@ export const categories: Category[] = [
     color: "text-violet-600 dark:text-violet-400",
     gradient: "from-violet-500 to-purple-500",
     description: "Legal research and scholarly articles",
+  },
+  {
+    name: "FairReview",
+    slug: "fairreview",
+    icon: Star,
+    color: "text-yellow-600 dark:text-yellow-400",
+    gradient: "from-yellow-500 to-amber-500",
+    description: "Expert reviews and critical analysis",
   },
 ];
 

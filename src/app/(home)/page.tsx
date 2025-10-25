@@ -133,7 +133,7 @@ export default async function Home() {
       )}
 
       {/* 🌟 Featured Articles Section */}
-      <section className="relative py-10 md:py-16 mb-10 z-10">
+      <section className="relative py-10 md:py-16 mb-1 z-10">
         <div className="container mx-auto md:px-8 px-2">
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">

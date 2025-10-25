@@ -1,5 +1,6 @@
 import React from "react";
 import { Scale, BookOpen, Users, FileText, Gavel, Heart } from "lucide-react";
+import Link from "next/link";
 
 const AboutUsPage = () => {
   return (
@@ -11,13 +12,13 @@ const AboutUsPage = () => {
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-amber-500 to-orange-400 mb-6">
               <Scale className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold mb-4">
               <span className="bg-gradient-to-r from-amber-500 via-orange-400 to-amber-400 bg-clip-text text-transparent">
                 About
               </span>{" "}
               <span className="text-foreground">FairLex</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+            </h2>
+            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-sans">
               Making law clear and accessible to everyone
             </p>
           </div>
@@ -44,8 +45,8 @@ const AboutUsPage = () => {
             <p className="text-lg text-muted-foreground leading-relaxed">
               Driven by a passion for fairness and knowledge, FairLex strives to
               create a community that values justice and awareness. Whether
-              you&aposre here to follow legal developments or learn something
-              new, we&aposre here to help you understand the law.
+              you&apos;re here to follow legal developments or learn something
+              new, we&apos;re here to help you understand the law.
             </p>
           </div>
         </div>
@@ -129,7 +130,7 @@ const AboutUsPage = () => {
             <p className="text-lg text-muted-foreground leading-relaxed">
               Fair Review aims to foster informed debate, encourage scholarly
               dialogue, and offer readers a deeper understanding of how law
-              interacts with society&apos most pressing questions.
+              interacts with society&apos;s most pressing questions.
             </p>
           </div>
         </div>
@@ -147,12 +148,16 @@ const AboutUsPage = () => {
             landscape.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-400 text-white font-semibold rounded-lg hover:shadow-lg transition-all">
-              Explore Articles
-            </button>
-            <button className="px-8 py-3 border-2 border-amber-500 text-foreground font-semibold rounded-lg hover:bg-amber-500/10 transition-all">
-              Contact Us
-            </button>
+            <Link href="/articles">
+              <button className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-400 text-white font-semibold rounded-lg hover:shadow-lg transition-all">
+                Explore Blogs
+              </button>
+            </Link>
+            <Link href='/contact'>
+              <button className="px-8 py-3 border-2 border-amber-500 text-foreground font-semibold rounded-lg hover:bg-amber-500/10 transition-all">
+                Contact Us
+              </button>
+            </Link>
           </div>
         </div>
       </div>

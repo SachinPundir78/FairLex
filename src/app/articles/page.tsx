@@ -22,7 +22,12 @@ const page = async ({ searchParams }: SearchPageProps) => {
         {/* Header */}
         <div className="mb-12 space-y-6 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            All Articles
+           
+              <span className="bg-gradient-to-r from-amber-500 via-orange-400 to-amber-400 bg-clip-text text-transparent">
+                Top
+              </span>
+              <span className="text-foreground">-Stories</span>
+            
           </h1>
           <ArticleSearchInput />
         </div>

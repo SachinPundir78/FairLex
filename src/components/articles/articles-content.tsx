@@ -3,7 +3,7 @@ import { fetchArticleByQuery } from "@/src/lib/query/fetch-article";
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 7;
 
 export async function ArticlesContent({
   searchText,

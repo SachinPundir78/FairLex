@@ -8,7 +8,7 @@ import { Tag, Calendar } from "lucide-react";
 
 const TopArticles = async () => {
   const articles = await prisma.articles.findMany({
-    take: 3,
+    take: 6,
     orderBy: {
       createdAt: "desc",
     },
@@ -33,12 +33,12 @@ const TopArticles = async () => {
             className={cn(
               "group relative overflow-hidden transition-all hover:scale-[1.02]",
               "border border-gray-200/50 dark:border-white/10",
-              "bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg"
+              "bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg",
             )}
           >
             <Link href={`/articles/${article.id}`}>
               {/* Featured Image */}
-              <div className="relative h-64 w-full overflow-hidden">
+              <div className="relative h-58 w-full overflow-hidden">
                 <Image
                   src={article.featuredImage as string}
                   alt={article.title}
@@ -78,7 +78,7 @@ const TopArticles = async () => {
                 </h3>
 
                 {/* Description/Excerpt */}
-                <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-400 line-clamp-3 text-sm">
                   {(() => {
                     // Strip HTML tags and limit excerpt
                     const plainContent = article.content.replace(

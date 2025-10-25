@@ -1,4 +1,5 @@
 "use client";
+
 import React, {
   FormEvent,
   startTransition,
@@ -14,6 +15,8 @@ import type { Articles } from "@prisma/client";
 import { updateArticles } from "@/src/actions/update-article";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { categories } from "@/src/config/categories"; // ✅ imported categories
+
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 type EditPropsPage = {
@@ -29,11 +32,9 @@ const EditArticlePage: React.FC<EditPropsPage> = ({ article }) => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const formData = new FormData(event.currentTarget);
     formData.append("content", content);
 
-    // Wrap the action call in startTransition
     startTransition(() => {
       action(formData);
     });
@@ -41,19 +42,20 @@ const EditArticlePage: React.FC<EditPropsPage> = ({ article }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <Card className="gap-3">
+      <Card className="gap-3 py-4">
         <CardHeader>
           <CardTitle>Edit Article</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-5">
+            {/* ✅ Title */}
             <div className="space-y-2 mt-1">
               <Label htmlFor="title">Article Title</Label>
               <Input
                 type="text"
                 name="title"
                 defaultValue={article.title}
-                placeholder="Enter a Article Title"
+                placeholder="Enter Article Title"
                 required
               />
               {formState.errors.title && (
@@ -62,21 +64,24 @@ const EditArticlePage: React.FC<EditPropsPage> = ({ article }) => {
                 </span>
               )}
             </div>
+
+            {/* ✅ Category (using categories.ts) */}
             <div className="space-y-3">
               <Label htmlFor="category">Category</Label>
               <select
                 id="category"
                 name="category"
                 defaultValue={article.category}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 required
               >
                 <option value="">Select Category</option>
-                <option value="Constitutional">Constitutional</option>
-                <option value="Technology">Technology</option>
-                <option value="Corporate">Corporate</option>
-                <option value="Family">Family</option>
-                <option value="ADR">ADR</option>
+                {categories.map((cat) => (
+                  <option key={cat.slug} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
               </select>
               {formState.errors.category && (
                 <span className="font-medium text-sm text-red-500">
@@ -85,6 +90,7 @@ const EditArticlePage: React.FC<EditPropsPage> = ({ article }) => {
               )}
             </div>
 
+            {/* ✅ Featured Image */}
             <div className="space-y-3">
               <Label htmlFor="featuredImage">Featured Image</Label>
               {article.featuredImage && (
@@ -114,6 +120,7 @@ const EditArticlePage: React.FC<EditPropsPage> = ({ article }) => {
               )}
             </div>
 
+            {/* ✅ Content Editor */}
             <div className="space-y-3">
               <Label>Content</Label>
               <ReactQuill theme="snow" value={content} onChange={setContent} />
@@ -124,6 +131,7 @@ const EditArticlePage: React.FC<EditPropsPage> = ({ article }) => {
               )}
             </div>
 
+            {/* ✅ Buttons */}
             <div className="flex justify-end gap-4">
               <Button type="button" variant="outline">
                 Discard Changes

@@ -19,7 +19,7 @@ export default async function CategoriesPage() {
   }, {} as Record<string, number>);
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4">
+    <div className="min-h-screen pt-24 pb-12 ">
       <Navbar />
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -30,7 +30,7 @@ export default async function CategoriesPage() {
               Category
             </span>
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg font-sans font-medium">
             Discover articles organized by topics that matter to you
           </p>
         </div>

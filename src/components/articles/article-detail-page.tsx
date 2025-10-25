@@ -2,11 +2,6 @@ import { Card } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/src/lib/prisma";
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-} from "@/src/components/ui/avatar";
 import LikeButton from "./actions/like-button";
 import { auth } from "@clerk/nextjs/server";
 import { MessageCircle, ArrowLeft } from "lucide-react";
@@ -14,6 +9,7 @@ import CommentForm from "../comments/comment-form";
 import CommentList from "../comments/comment-list";
 import Navbar from "./header/navbar";
 import Link from "next/link";
+import Image from "next/image";
 
 type ArticleDetailPageProps = {
   article: Prisma.ArticlesGetPayload<{
@@ -67,6 +63,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = async ({
   const likes = await prisma.like.findMany({
     where: { articleId: article.id },
   });
+
   const { userId } = await auth();
   const user = await prisma.user.findUnique({
     where: { clerkUserId: userId as string },
@@ -78,14 +75,27 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = async ({
   const readingTime = calculateReadingTime(article.content);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Reuse your existing Navbar */}
+    <div className="min-h-screen bg-background relative">
+      {/* Background Glow for Light Mode */}
+      <div className="absolute inset-0 -z-10">
+        <div
+          className="absolute inset-0 dark:hidden"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle 600px at 0% 200px, #fef3c7, transparent),
+              radial-gradient(circle 600px at 100% 200px, #fef3c7, transparent)
+            `,
+          }}
+        />
+      </div>
+
+      {/* Navbar */}
       <Navbar />
 
       <main className="container mx-auto px-4 py-20 sm:px-6 lg:px-8">
         <article className="mx-auto max-w-5xl">
           {/* Back to Blogs Button */}
-          <div className="mb-4 mt-6">
+          <div className="mb-6 mt-6">
             <Link href="/articles">
               <Button
                 variant="default"
@@ -98,48 +108,75 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = async ({
           </div>
 
           {/* Article Header */}
-          <header className="mb-8 mt-6">
+          <header className="mb-8">
             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
+              <span className="rounded-full bg-primary/10 px-3 py-1 text-sm text-primary font-medium">
                 {article.category}
               </span>
             </div>
 
-            <h1 className="text-4xl font-bold tracking-tight text-foreground mb-4">
+            <h2 className="text-4xl md:text-4xl font-bold font-serif tracking-tight text-foreground mb-6">
               {article.title}
-            </h1>
+            </h2>
 
-            <div className="flex items-center gap-4 text-muted-foreground">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={article.author.imageUrl as string} />
-                <AvatarFallback>{article.id}</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium text-foreground">
+            <div className="flex items-center gap-3 text-muted-foreground mb-6">
+              <p className="text-base">
+                By{" "}
+                <span className="font-semibold text-foreground">
                   {article.author.name}
-                </p>
-                <p className="text-sm">
-                  {article.createdAt.toDateString()} · {readingTime} min read
-                </p>
-              </div>
+                </span>{" "}
+                |{" "}
+                {article.createdAt.toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}{" "}
+                · {readingTime} min read
+              </p>
             </div>
           </header>
 
-          {/* Article Content */}
+          {/* Featured Image */}
+          {article.featuredImage && (
+            <div className="relative w-full h-[400px] md:h-[500px] mb-12 rounded-xl overflow-hidden">
+              <Image
+                src={article.featuredImage}
+                alt={article.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
+
+          {/* Article Content with styled hyperlinks and all headings as h2 */}
           <section
-            className="prose prose-lg dark:prose-invert max-w-none mb-12"
+            className="prose prose-lg dark:prose-invert max-w-none mb-5 
+            [&_a]:text-blue-600 [&_a]:italic [&_a]:underline 
+            dark:[&_a]:text-blue-400 [&_a]:hover:text-blue-800 
+            dark:[&_a]:hover:text-blue-300 [&_a]:transition-colors
+            [&_h1]:text-3xl [&_h1]:font-semibold [&_h1]:mt-4 [&_h1]:mb-4 [&_h1]:text-foreground [&_h1]:tracking-tight [&_h1]:font-serif
+            [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:mt-4 [&_h2]:mb-4 [&_h2]:text-foreground [&_h2]:tracking-tight [&_h2]:font-serif
+            [&_h3]:text-3xl [&_h3]:font-semibold [&_h3]:mt-4 [&_h3]:mb-4 [&_h3]:text-foreground [&_h3]:tracking-tight [&_h3]:font-serif"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
 
           {/* Article Actions */}
-          <LikeButton articleId={article.id} likes={likes} isLiked={isLiked} />
+          <div className="mb-12">
+            <LikeButton
+              articleId={article.id}
+              likes={likes}
+              isLiked={isLiked}
+            />
+          </div>
 
           {/* Comments Section */}
-          <Card className="p-6">
+          <Card className="p-6 md:p-8">
             <div className="flex items-center gap-2 mb-8">
               <MessageCircle className="h-6 w-6 text-primary" />
               <h2 className="text-2xl font-semibold text-foreground">
-                {comments.length} Comments
+                {comments.length}{" "}
+                {comments.length === 1 ? "Comment" : "Comments"}
               </h2>
             </div>
 
