@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/src/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
 export async function toggleLike(articleId: string) {
@@ -14,12 +14,32 @@ export async function toggleLike(articleId: string) {
 
   try {
     // Ensure the user exists in the database
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: { clerkUserId: userId },
     });
 
+    // If user doesn't exist, create them
     if (!user) {
-      return { error: "User not found. Please try signing in again." };
+      const clerkUser = await currentUser();
+
+      if (!clerkUser) {
+        return { error: "Failed to fetch user information. Please try again." };
+      }
+
+      // Create user in database
+      user = await prisma.user.create({
+        data: {
+          clerkUserId: userId,
+          email: clerkUser.emailAddresses[0]?.emailAddress || "",
+          name:
+            clerkUser.firstName && clerkUser.lastName
+              ? `${clerkUser.firstName} ${clerkUser.lastName}`.trim()
+              : clerkUser.username ||
+                clerkUser.emailAddresses[0]?.emailAddress ||
+                "User",
+          imageUrl: clerkUser.imageUrl || null,
+        },
+      });
     }
 
     // Check if the user has already liked the article
