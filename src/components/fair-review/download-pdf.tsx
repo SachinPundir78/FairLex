@@ -5,6 +5,7 @@ import { Download, Loader2 } from "lucide-react";
 import { useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf/dist/polyfills.es.js";
+import { useAuth, SignInButton } from "@clerk/nextjs";
 
 type DownloadPDFProps = {
   review: {
@@ -30,9 +31,17 @@ export default function DownloadPDF({
   className = "",
   fullWidth = true,
 }: DownloadPDFProps) {
+  const { isSignedIn } = useAuth();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showSignInPrompt, setShowSignInPrompt] = useState(false);
 
   const generatePDF = async () => {
+    // Check authentication first
+    if (!isSignedIn) {
+      setShowSignInPrompt(true);
+      return;
+    }
+
     setIsGenerating(true);
 
     try {
@@ -218,6 +227,39 @@ export default function DownloadPDF({
       setIsGenerating(false);
     }
   };
+
+  // Show sign-in prompt if user is not authenticated
+  if (showSignInPrompt && !isSignedIn) {
+    return (
+      <div className="flex flex-col gap-2 p-3 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+        <p className="text-xs text-center font-medium text-yellow-800 dark:text-yellow-200">
+          Sign in to download this review as PDF
+        </p>
+        <div className="flex gap-2">
+          <SignInButton mode="modal">
+            <Button
+              size="sm"
+              className="flex-1 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white border-0"
+            >
+              Sign In
+            </Button>
+          </SignInButton>
+          <Button
+            size="sm"
+            variant="outline"
+            className="flex-1"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowSignInPrompt(false);
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Button

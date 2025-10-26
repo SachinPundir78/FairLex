@@ -27,18 +27,10 @@ type ArticleDetailPageProps = {
 
 // Calculate reading time based on word count
 function calculateReadingTime(content: string): number {
-  // Strip HTML tags
   const plainText = content.replace(/<\/?[^>]+(>|$)/g, "");
-
-  // Count words (split by whitespace)
   const wordCount = plainText.trim().split(/\s+/).length;
-
-  // Average reading speed: 200-250 words per minute
-  // Using 225 as middle ground
   const wordsPerMinute = 225;
   const readingTime = Math.ceil(wordCount / wordsPerMinute);
-
-  // Minimum 1 minute
   return readingTime < 1 ? 1 : readingTime;
 }
 
@@ -64,14 +56,20 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = async ({
     where: { articleId: article.id },
   });
 
+  // Get auth info but don't require it
   const { userId } = await auth();
-  const user = await prisma.user.findUnique({
-    where: { clerkUserId: userId as string },
-  });
 
-  const isLiked = likes.some((like) => like.userId === user?.id);
+  // Only fetch user if logged in - with proper typing
+  let user: Prisma.UserGetPayload<object> | null = null;
+  let isLiked = false;
 
-  // Calculate reading time
+  if (userId) {
+    user = await prisma.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+    isLiked = likes.some((like) => like.userId === user?.id);
+  }
+
   const readingTime = calculateReadingTime(article.content);
 
   return (
@@ -149,7 +147,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = async ({
             </div>
           )}
 
-          {/* Article Content with styled hyperlinks and all headings as h2 */}
+          {/* Article Content */}
           <section
             className="prose prose-lg dark:prose-invert max-w-none mb-5 
             [&_a]:text-blue-600 [&_a]:italic [&_a]:underline 
@@ -167,6 +165,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = async ({
               articleId={article.id}
               likes={likes}
               isLiked={isLiked}
+              isLoggedIn={!!userId}
             />
           </div>
 
@@ -181,7 +180,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = async ({
             </div>
 
             {/* Comment Form */}
-            <CommentForm articleId={article.id} />
+            <CommentForm articleId={article.id} isLoggedIn={!!userId} />
 
             {/* Comments List */}
             <CommentList comments={comments} />

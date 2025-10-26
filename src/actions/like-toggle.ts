@@ -5,35 +5,46 @@ import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
 export async function toggleLike(articleId: string) {
-  const { userId } = await auth(); // Clerk's user ID
-  if (!userId) throw new Error("You must be logged in to like an article");
+  const { userId } = await auth();
 
-  // Ensure the user exists in the database
-  const user = await prisma.user.findUnique({
-    where: { clerkUserId: userId },
-  });
-
-  if (!user) {
-    throw new Error("User does not exist in the database.");
+  // Return error instead of throwing
+  if (!userId) {
+    return { error: "Please sign in to like this article" };
   }
 
-  // Check if the user has already liked the article
-  const existingLike = await prisma.like.findFirst({
-    where: { articleId, userId: user.id }, // Use `user.id`, not `clerkUserId`
-  });
+  try {
+    // Ensure the user exists in the database
+    const user = await prisma.user.findUnique({
+      where: { clerkUserId: userId },
+    });
 
-  if (existingLike) {
-    // Unlike the article
-    await prisma.like.delete({
-      where: { id: existingLike.id },
+    if (!user) {
+      return { error: "User not found. Please try signing in again." };
+    }
+
+    // Check if the user has already liked the article
+    const existingLike = await prisma.like.findFirst({
+      where: { articleId, userId: user.id },
     });
-  } else {
-    // Like the article
-    await prisma.like.create({
-      data: { articleId, userId: user.id },
-    });
+
+    if (existingLike) {
+      // Unlike the article
+      await prisma.like.delete({
+        where: { id: existingLike.id },
+      });
+    } else {
+      // Like the article
+      await prisma.like.create({
+        data: { articleId, userId: user.id },
+      });
+    }
+
+    // Revalidate the path
+    revalidatePath(`/articles/${articleId}`);
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error toggling like:", error);
+    return { error: "Failed to update like. Please try again." };
   }
-
-  // Return updated like count
-  revalidatePath(`/article/${articleId}`);
 }

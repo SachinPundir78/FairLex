@@ -3,7 +3,7 @@
 import { Search } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect, useRef } from "react";
 
 export default function FairReviewSearchInput() {
   const router = useRouter();
@@ -12,21 +12,40 @@ export default function FairReviewSearchInput() {
     searchParams.get("search") || ""
   );
   const [isPending, startTransition] = useTransition();
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSearch = (value: string) => {
     setSearchValue(value);
-    startTransition(() => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set("search", value);
-        params.set("page", "1"); // Reset to page 1 on new search
-      } else {
-        params.delete("search");
-        params.set("page", "1");
-      }
-      router.push(`?${params.toString()}`);
-    });
+
+    // Clear existing timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    // Set new timer to trigger search after 500ms of no typing
+    debounceTimerRef.current = setTimeout(() => {
+      startTransition(() => {
+        const params = new URLSearchParams(searchParams.toString());
+        if (value.trim()) {
+          params.set("search", value.trim());
+          params.set("page", "1");
+        } else {
+          params.delete("search");
+          params.set("page", "1");
+        }
+        router.push(`?${params.toString()}`);
+      });
+    }, 500); // 500ms delay - adjust as needed
   };
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="relative max-w-2xl mx-auto">
@@ -37,7 +56,6 @@ export default function FairReviewSearchInput() {
         value={searchValue}
         onChange={(e) => handleSearch(e.target.value)}
         className="pl-12 h-12 text-base bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-gray-300 dark:border-gray-700 focus:border-yellow-500 dark:focus:border-yellow-500 relative z-0"
-        disabled={isPending}
       />
       {isPending && (
         <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10">
