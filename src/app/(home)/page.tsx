@@ -9,6 +9,10 @@ import FeaturedSection from "@/src/components/home/featured-section";
 import LatestStoriesSection from "@/src/components/home/latest-blog";
 import { prisma } from "@/src/lib/prisma";
 
+
+// ✨ Enable ISR - Revalidate every 60 seconds
+export const revalidate = 60;
+
 // Fetch the latest article from database
 async function getLatestArticle() {
   try {

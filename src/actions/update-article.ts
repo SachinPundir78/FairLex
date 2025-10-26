@@ -153,6 +153,9 @@ export const updateArticles = async (
     }
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/"); 
+  revalidatePath("/articles"); 
+  revalidatePath("/dashboard"); 
+
   redirect("/dashboard");
 };

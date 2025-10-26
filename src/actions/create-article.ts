@@ -144,6 +144,9 @@ export const createArticle = async (
     }
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/"); // Homepage
+  revalidatePath("/articles"); // Articles page
+  revalidatePath("/dashboard"); // Dashboard
+
   redirect("/dashboard");
 };
