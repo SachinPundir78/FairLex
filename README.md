@@ -31,31 +31,51 @@ FairLex/
 │
 ├── src/
 │   ├── actions/
+│   │
 │   ├── app/
 │   │   ├── (auth)/
 │   │   ├── (home)/
+│   │   ├── about/
 │   │   ├── articles/
+│   │   ├── categories/
+│   │   ├── contact/
 │   │   ├── dashboard/
+│   │   ├── fair-review/
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   └── layout.tsx
 │   │
 │   ├── components/
+│   │   ├── about/
 │   │   ├── articles/
+│   │   ├── categories/
 │   │   ├── comments/
+│   │   ├── contact/
 │   │   ├── dashboard/
+│   │   ├── fair-review/
 │   │   ├── home/
-│   │   └── ui/
+│   │   ├── ui/
+│   │   └── theme-provider.tsx
 │   │
-│   └── lib/
-│       ├── query/
-│       ├── prisma.ts
-│       ├── utils.ts
-│       └── middleware.ts
+│   ├── config/
+│   │   └── categories.ts
+│   │
+│   ├── lib/
+│   │   ├── query/
+│   │   ├── prisma.ts
+│   │   ├── utils.ts
+│   │   └── middleware.ts
+│   │
+│   ├── types/
+│   │   ├── globals.d.ts
+│   │   └── roles.ts
+│   │
+│   └── middleware.ts
 │
 ├── .env
 ├── .env.local
 └── README.md
+
 ```
 
 ---
@@ -70,7 +90,7 @@ FairLex/
 | ![Screenshot 7](./public/S7.png) | ![Screenshot 8](./public/S8.png) |
 | ![Screenshot 9](./public/S9.png) | ![Screenshot 10](./public/S10.png) |
 
-> 📷 _All UI screenshots of FairLex are stored inside the `/screenshots` folder._
+> 📷 _All UI screenshots of FairLex are stored inside the `/public` folder._
 
 ---
 
@@ -99,12 +119,21 @@ npm install
 ```
 
 ### 3️⃣ Configure Environment Variables  
-Create a `.env.local` file with your credentials:
+Create a `.env` file with your credentials:
 ```
 DATABASE_URL=your_postgresql_url
+
+```
+
+Create a `.env.local` file with your credentials:
+```
+
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
 CLERK_SECRET_KEY=your_clerk_secret
-CLOUDINARY_URL=your_cloudinary_key
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_key
+
 ```
 
 ### 4️⃣ Run the development server
