@@ -151,7 +151,7 @@ const ContactPage = () => {
                   href="/"
                   className="block text-muted-foreground hover:text-amber-500 transition-colors"
                 >
-                  → Access Dashboard
+                  → Access Home
                 </Link>
               </div>
             </div>

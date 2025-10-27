@@ -42,11 +42,18 @@ const AboutUsPage = () => {
               judgments and policies into easy, understandable content for
               students, professionals, and anyone interested in law.
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
               Driven by a passion for fairness and knowledge, FairLex strives to
               create a community that values justice and awareness. Whether
               you&apos;re here to follow legal developments or learn something
               new, we&apos;re here to help you understand the law.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              FairLex is not just a blog — it&apos;s a platform where the next
+              generation of lawyers and thinkers shape the future of
+              jurisprudence. Explore deep dives, case comments, and our monthly
+              Fair Review magazine — all crafted to make law accessible,
+              analytical, and alive.
             </p>
           </div>
         </div>
@@ -143,7 +150,7 @@ const AboutUsPage = () => {
             Join Our Community
           </h2>
           <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-            Whether you&aposre a student, professional, or simply curious about
+            Whether you&apos;re a student, professional, or simply curious about
             law, FairLex is your trusted companion in understanding the legal
             landscape.
           </p>
@@ -153,7 +160,7 @@ const AboutUsPage = () => {
                 Explore Blogs
               </button>
             </Link>
-            <Link href='/contact'>
+            <Link href="/contact">
               <button className="px-8 py-3 border-2 border-amber-500 text-foreground font-semibold rounded-lg hover:bg-amber-500/10 transition-all">
                 Contact Us
               </button>

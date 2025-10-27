@@ -53,7 +53,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="md:mx-1 mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300 md:text-xl">
-            FairLex is not just a blog — it’s a platform where the next
+            FairLex is not just a blog — it&apos;s a platform where the next
             generation of lawyers and thinkers shape the future of
             jurisprudence. Explore deep dives, case comments, and our monthly
             Fair Review magazine — all crafted to make law accessible,
